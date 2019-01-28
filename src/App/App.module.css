@@ -1,0 +1,20 @@
+:global(body) {
+  background: linear-gradient(to bottom, #42b3e7 30%, #97d33b 50%);
+}
+:global(#root) {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: url('../assets/images/bg.png') center no-repeat;
+  background-size: 100%;
+  overflow: hidden;
+}
+.container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}

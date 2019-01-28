@@ -1,0 +1,30 @@
+.mountain {
+  width: 750px;
+  height: 296px;
+  background: url('../assets/images/decoration/mountain.png') center/contain;
+  position: absolute;
+  top: 190px;
+}
+.house {
+  width: 334px;
+  height: 375px;
+  background: url('../assets/images/decoration/house.png') center/contain;
+  position: absolute;
+  top: 385px;
+}
+.man {
+  width: 169px;
+  height: 192px;
+  background: url('../assets/images/decoration/man.png') center/contain;
+  position: absolute;
+  bottom: 360px;
+  right: 70px;
+}
+.garden {
+  width: 671px;
+  height: 414px;
+  background: url('../assets/images/decoration/garden.png') center/contain;
+  position: absolute;
+  bottom: 95px;
+  left: 15px;
+}
