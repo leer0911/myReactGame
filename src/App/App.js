@@ -2,6 +2,9 @@ import React, { Component, createRef } from 'react';
 import styles from './App.module.css';
 import Decoration from '../Decoration/Decoration';
 import Tree from '../Tree/Tree';
+import Checkoutin from '../Modals/Checkoutin';
+import ModalContainer from '../components/Modal/ModalContainer';
+import Modal from '../components/Modal/Modal';
 
 class App extends Component {
   containerRef;
@@ -21,6 +24,24 @@ class App extends Component {
       <section className={styles.container} ref={this.containerRef}>
         <Decoration />
         <Tree />
+        <ModalContainer>
+          {modal => {
+            return (
+              <div>
+                {modal.visible && (
+                  <Modal
+                    isOpen
+                    onRequestClose={modal.hide}
+                    closeTimeoutMS={1000}
+                  >
+                    <Checkoutin />
+                  </Modal>
+                )}
+                <button onClick={modal.show}>点击打开1</button>
+              </div>
+            );
+          }}
+        </ModalContainer>
       </section>
     );
   }

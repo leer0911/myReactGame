@@ -49,7 +49,7 @@ const genCont = () => {
     const cssCont = `.${name} {
   width: ${width}px;
   height: ${height}px;
-  background: url('../assets/images/${MODULE}/${file}') center/contain;
+  background: url('../assets/images/${MODULE}/${file}') center/contain no-repeat;
   position:absolute;
 }\n`;
     css += cssCont;
