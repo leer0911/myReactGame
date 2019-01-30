@@ -16,3 +16,65 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* fade 动画 */
+.overlayActiveEnter {
+  animation: show 200ms ease-in;
+}
+.overlayActiveExit {
+  animation: hide 200ms ease-in forwards;
+}
+
+/* up 动画 */
+.overlayPopup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 1000;
+}
+.contentPopup {
+  position: absolute;
+  bottom: 0;
+}
+.contentPopupActiveEnter {
+  animation: up 200ms ease-in forwards;
+}
+.contentPopupActiveExit {
+  animation: down 200ms ease-in forwards;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes up {
+  from {
+    transform: translate(0%, 100%);
+  }
+  to {
+    transform: translate(0%, 0%);
+  }
+}
+@keyframes down {
+  from {
+    transform: translate(0%, 0%);
+  }
+  to {
+    transform: translate(0%, 100%);
+  }
+}

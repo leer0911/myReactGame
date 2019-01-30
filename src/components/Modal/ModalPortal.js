@@ -1,16 +1,27 @@
+import { CSSTransition } from 'react-transition-group';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
 
-// so that our CSS is statically analyzable
-const CLASS_NAMES = {
-  overlay: styles.overlay,
-  overlayOpen: styles.overlayOpen,
-  overlayClose: styles.overlayClose,
-  content: styles.content,
-  contentOpen: styles.contentOpen,
-  contentClose: styles.contentClose
-};
+export const classNamesShape =
+  process.env.NODE_ENV !== 'production'
+    ? PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          enter: PropTypes.string,
+          exit: PropTypes.string,
+          active: PropTypes.string
+        }),
+        PropTypes.shape({
+          enter: PropTypes.string,
+          enterDone: PropTypes.string,
+          enterActive: PropTypes.string,
+          exit: PropTypes.string,
+          exitDone: PropTypes.string,
+          exitActive: PropTypes.string
+        })
+      ])
+    : null;
 
 export default class ModalPortal extends Component {
   static defaultProps = {
@@ -35,7 +46,12 @@ export default class ModalPortal extends Component {
     shouldCloseOnOverlayClick: PropTypes.bool,
     children: PropTypes.node,
     overlayRef: PropTypes.func,
-    contentRef: PropTypes.func
+    contentRef: PropTypes.func,
+    popup: PropTypes.bool,
+    noAnimation: PropTypes.bool,
+    animationType: PropTypes.string,
+    contentTransitionName: classNamesShape,
+    overlayTransitionName: classNamesShape
   };
 
   constructor(props) {
@@ -43,7 +59,8 @@ export default class ModalPortal extends Component {
 
     this.state = {
       afterOpen: false,
-      beforeClose: false
+      beforeClose: false,
+      defaultTimeout: props.noAnimation ? 0 : 500
     };
 
     this.shouldClose = null;
@@ -101,7 +118,7 @@ export default class ModalPortal extends Component {
   };
 
   close = () => {
-    if (this.props.closeTimeoutMS > 0) {
+    if (this.props.closeTimeoutMS > 0 || !this.props.noAnimation) {
       this.closeWithTimeout();
     } else {
       this.closeWithoutTimeout();
@@ -109,7 +126,8 @@ export default class ModalPortal extends Component {
   };
 
   closeWithTimeout = () => {
-    const closesAt = Date.now() + this.props.closeTimeoutMS;
+    const closesAt =
+      Date.now() + this.props.closeTimeoutMS + this.state.defaultTimeout;
     this.setState({ beforeClose: true, closesAt }, () => {
       this.closeTimer = setTimeout(
         this.closeWithoutTimeout,
@@ -138,8 +156,6 @@ export default class ModalPortal extends Component {
     if (this.shouldClose && this.props.shouldCloseOnOverlayClick) {
       if (this.ownerHandlesClose()) {
         this.requestClose(event);
-      } else {
-        this.focusContent();
       }
     }
     this.shouldClose = null;
@@ -173,49 +189,70 @@ export default class ModalPortal extends Component {
 
   shouldBeClosed = () => !this.state.isOpen && !this.state.beforeClose;
 
-  buildClassName = (which, additional) => {
-    const classNames =
-      typeof additional === 'object'
-        ? additional
-        : {
-            base: CLASS_NAMES[which],
-            afterOpen: `${CLASS_NAMES[`${which}Open`]}`,
-            beforeClose: `${CLASS_NAMES[`${which}Close`]}`
-          };
-    let className = classNames.base;
-    if (this.state.afterOpen) {
-      className = `${className} ${classNames.afterOpen}`;
-    }
-    if (this.state.beforeClose) {
-      className = `${className} ${classNames.beforeClose}`;
-    }
-    return typeof additional === 'string' && additional
-      ? `${className} ${additional}`
-      : className;
-  };
-
   render() {
-    const { className, overlayClassName } = this.props;
+    const {
+      className,
+      overlayClassName,
+      closeTimeoutMS,
+      contentTransitionName,
+      overlayTransitionName,
+      popup
+    } = this.props;
+
+    const getAniClassName = key => {
+      if (key === 'overlay' && overlayTransitionName) {
+        return overlayTransitionName;
+      }
+      if (key === 'content' && contentTransitionName) {
+        return contentTransitionName;
+      }
+
+      popup && (key = `${key}Popup`);
+      return {
+        appear: styles[`${key}Appear`],
+        appearActive: styles[`${key}ActiveAppear`],
+        enter: styles[`${key}Enter`],
+        enterActive: styles[`${key}ActiveEnter`],
+        exit: styles[`${key}Exit`],
+        exitActive: styles[`${key}ActiveExit`]
+      };
+    };
 
     return this.shouldBeClosed() ? null : (
-      <div
-        ref={this.setOverlayRef}
-        className={this.buildClassName('overlay', overlayClassName)}
-        style={{ ...this.props.style.overlay }}
-        onClick={this.handleOverlayOnClick}
-        onMouseDown={this.handleOverlayOnMouseDown}
+      <CSSTransition
+        in={this.state.afterOpen && !this.state.beforeClose}
+        timeout={closeTimeoutMS || this.state.defaultTimeout}
+        classNames={getAniClassName('overlay')}
       >
         <div
-          ref={this.setContentRef}
-          style={{ ...this.props.style.content }}
-          className={this.buildClassName('content', className)}
-          onMouseDown={this.handleContentOnMouseDown}
-          onMouseUp={this.handleContentOnMouseUp}
-          onClick={this.handleContentOnClick}
+          ref={this.setOverlayRef}
+          className={
+            overlayClassName || popup ? styles.overlayPopup : styles.overlay
+          }
+          style={{ ...this.props.style.overlay }}
+          onClick={this.handleOverlayOnClick}
+          onMouseDown={this.handleOverlayOnMouseDown}
         >
-          {this.props.children}
+          <CSSTransition
+            in={this.state.afterOpen && !this.state.beforeClose}
+            timeout={closeTimeoutMS || this.state.defaultTimeout}
+            classNames={getAniClassName('content')}
+          >
+            <div
+              ref={this.setContentRef}
+              style={{ ...this.props.style.content }}
+              className={
+                className || popup ? styles.contentPopup : styles.content
+              }
+              onMouseDown={this.handleContentOnMouseDown}
+              onMouseUp={this.handleContentOnMouseUp}
+              onClick={this.handleContentOnClick}
+            >
+              {this.props.children}
+            </div>
+          </CSSTransition>
         </div>
-      </div>
+      </CSSTransition>
     );
   }
 }

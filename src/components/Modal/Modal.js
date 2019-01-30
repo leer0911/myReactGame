@@ -22,6 +22,7 @@ class Modal extends Component {
   /* eslint-disable react/no-unused-prop-types */
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
+    noAnimation: PropTypes.bool,
     style: PropTypes.shape({
       content: PropTypes.object,
       overlay: PropTypes.object

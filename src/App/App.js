@@ -28,15 +28,9 @@ class App extends Component {
           {modal => {
             return (
               <div>
-                {modal.visible && (
-                  <Modal
-                    isOpen
-                    onRequestClose={modal.hide}
-                    closeTimeoutMS={1000}
-                  >
-                    <Checkoutin />
-                  </Modal>
-                )}
+                <Modal isOpen={modal.visible} onRequestClose={modal.hide} popup>
+                  <Checkoutin />
+                </Modal>
                 <button onClick={modal.show}>点击打开1</button>
               </div>
             );
