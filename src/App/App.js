@@ -5,6 +5,7 @@ import Tree from '../Tree/Tree';
 import Checkoutin from '../Modals/Checkoutin';
 import ModalContainer from '../components/Modal/ModalContainer';
 import Modal from '../components/Modal/Modal';
+import Toast from '../components/Toast/Toast';
 
 class App extends Component {
   containerRef;
@@ -15,6 +16,10 @@ class App extends Component {
   componentDidMount() {
     this.containerResize();
     window.addEventListener('resize', this.containerResize);
+    Toast.loading('Loading...', 1000);
+    setTimeout(() => {
+      Toast.hide();
+    }, 2000);
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.containerResize);
