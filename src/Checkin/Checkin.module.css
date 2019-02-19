@@ -1,0 +1,99 @@
+.openBtn {
+  width: 88px;
+  height: 110px;
+  background: url('../assets/images/checkin/btn.png') center/contain no-repeat;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+.wrap {
+  width: 582px;
+  background: #fff;
+  margin-top: -1px;
+  border-radius: 0px 0px 40px 40px;
+  padding-bottom: 54px;
+}
+.modalBtn {
+  width: 486px;
+  height: 88px;
+  background: #54c367;
+  border-radius: 44px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.closeBtn {
+  width: 56px;
+  height: 56px;
+  background: url('../assets/images/common/close.png') center/contain no-repeat;
+  margin: 50px auto 0;
+}
+
+.giftWrap {
+  display: flex;
+  justify-content: space-between;
+  padding: 54px 52px 62px 52px;
+}
+.gift1 {
+  width: 104px;
+  height: 104px;
+  background: url('../assets/images/checkin/gift1.png') center/contain no-repeat;
+}
+.gift2 {
+  width: 104px;
+  height: 104px;
+  background: url('../assets/images/checkin/gift2.png') center/contain no-repeat;
+}
+.gift3 {
+  width: 104px;
+  height: 104px;
+  background: url('../assets/images/checkin/gift3.png') center/contain no-repeat;
+}
+.gift4 {
+  width: 104px;
+  height: 104px;
+  background: url('../assets/images/checkin/gift4.png') center/contain no-repeat;
+}
+.checkList {
+  display: flex;
+  justify-content: space-between;
+  padding: 56px 40px 36px 40px;
+}
+.checkItem {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f4ef;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #838382;
+}
+.checkItemText {
+  transform: scale(0.9);
+}
+.text {
+  font-size: 28px;
+  color: #323232;
+  text-align: center;
+}
+.selected {
+  width: 56px;
+  height: 56px;
+  background: url('../assets/images/checkin/selected.png') center/contain
+    no-repeat;
+}
+.title {
+  width: 582px;
+  height: 152px;
+  background: url('../assets/images/checkin/title.png') center/contain no-repeat;
+}
+.treasure {
+  width: 74px;
+  height: 66px;
+  background: url('../assets/images/checkin/treasure.png') center/contain
+    no-repeat;
+}

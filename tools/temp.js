@@ -9,7 +9,7 @@ const MODULE = process.argv[2] || '';
 
 if (!MODULE) {
   console.log(
-    'Module name is required, please use cli like ` npm run temp xxx `'
+    'Module name is required, please use cli like ` npm run temp xxx `',
   );
   return;
 }
@@ -22,12 +22,26 @@ const COMPATH = path.join(TEMPPATH, COMNAME);
 const getjsCont = cont => {
   return `import React, { Component, Fragment } from 'react';
 import styles from './${COMNAME}.module.css';
+import ModalContainer from '../components/Modal/ModalContainer';
+import Modal from '../components/Modal/Modal';
 
 class ${COMNAME} extends Component {
   render() {
     return (
       <Fragment>
 ${cont}
+        <ModalContainer>
+          {modal => {
+            return (
+              <section>
+                <Modal isOpen={modal.visible} onRequestClose={modal.hide}>
+                  
+                </Modal>
+                <section className={styles.btn} onClick={modal.show} />
+              </section>
+            );
+          }}
+        </ModalContainer>
       </Fragment>
     );
   }
@@ -50,7 +64,6 @@ const genCont = () => {
   width: ${width}px;
   height: ${height}px;
   background: url('../assets/images/${MODULE}/${file}') center/contain no-repeat;
-  position:absolute;
 }\n`;
     css += cssCont;
     if (index === files.length - 1) {

@@ -2,9 +2,7 @@ import React, { Component, createRef } from 'react';
 import styles from './App.module.css';
 import Decoration from '../Decoration/Decoration';
 import Tree from '../Tree/Tree';
-import Checkoutin from '../Modals/Checkoutin';
-import ModalContainer from '../components/Modal/ModalContainer';
-import Modal from '../components/Modal/Modal';
+import Checkin from '../Checkin/Checkin';
 import Toast from '../components/Toast/Toast';
 
 class App extends Component {
@@ -29,18 +27,7 @@ class App extends Component {
       <section className={styles.container} ref={this.containerRef}>
         <Decoration />
         <Tree />
-        <ModalContainer>
-          {modal => {
-            return (
-              <div>
-                <Modal isOpen={modal.visible} onRequestClose={modal.hide} popup>
-                  <Checkoutin />
-                </Modal>
-                <button onClick={modal.show}>点击打开1</button>
-              </div>
-            );
-          }}
-        </ModalContainer>
+        <Checkin />
       </section>
     );
   }
