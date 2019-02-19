@@ -1,3 +1,25 @@
+.c1 {
+  width: 154px;
+  height: 88px;
+  background: url('../assets/images/decoration/c1.png') center/contain no-repeat;
+  position: absolute;
+  top: 190px;
+}
+.c2 {
+  width: 262px;
+  height: 114px;
+  background: url('../assets/images/decoration/c2.png') center/contain no-repeat;
+  position: absolute;
+  top: 10px;
+}
+.c3 {
+  width: 210px;
+  height: 120px;
+  background: url('../assets/images/decoration/c3.png') center/contain no-repeat;
+  position: absolute;
+  top: 190px;
+  right: 0;
+}
 .mountain {
   width: 750px;
   height: 296px;
